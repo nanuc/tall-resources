@@ -3,6 +3,10 @@
 namespace Nanuc\TallResources\Resources;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
+use Mediconesystems\LivewireDatatables\Column;
+use Nanuc\TallResources\Configurations\TallTableConfiguration;
 use Tanthammar\TallForms\Input;
 
 abstract class TallResource
@@ -17,9 +21,9 @@ abstract class TallResource
         return static::make()->getAsForm($fields);
     }
 
-    public static function asTable($fields = null)
+    public static function asTable(TallTableConfiguration $tableConfiguration = null, $fields = null)
     {
-        return static::make()->getAsTable($fields);
+        return static::make()->getAsTable($tableConfiguration, $fields);
     }
 
     public function getAsForm($fields = null)
@@ -29,11 +33,22 @@ abstract class TallResource
         }, $this->getIncludedFields($fields));
     }
 
-    public function getAsTable($fields = null)
+    public function getAsTable(TallTableConfiguration $tableConfiguration = null, $fields = null)
     {
-        return array_map(function($field) {
+        $fields = array_map(function($field) {
             return $field->toTableColumn();
         }, $this->getIncludedFields($fields));
+
+        if($tableConfiguration->hasAction()) {
+            $fields[] = Column::callback([$tableConfiguration->actionKey], function($key) use ($tableConfiguration) {
+                return view('tall-resources::actions', [
+                    'key' => $key,
+                    'tableConfiguration' => $tableConfiguration,
+                ]);
+            });
+        }
+
+        return $fields;
     }
 
     protected function getIncludedFields($fields)

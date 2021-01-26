@@ -11,6 +11,8 @@ class TallResourcesServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../config/tall-resources.php' => base_path('config/tall-resources.php')
         ], 'config');
+
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'tall-resources');
     }
 
     public function register()
