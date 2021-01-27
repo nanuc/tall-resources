@@ -3,11 +3,8 @@
 namespace Nanuc\TallResources\Resources;
 
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Str;
 use Mediconesystems\LivewireDatatables\Column;
 use Nanuc\TallResources\Configurations\TallTableConfiguration;
-use Tanthammar\TallForms\Input;
 
 abstract class TallResource
 {
