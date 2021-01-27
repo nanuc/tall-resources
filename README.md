@@ -27,7 +27,7 @@ class UserResource extends TallResource
 }
 ```
 
-## Use in form
+### Use in form
 ```php 
 public function fields()
 {
@@ -42,7 +42,7 @@ public function fields()
 }
 ```
 
-## Use in table 
+### Use in table 
 ```php 
 public function columns()
 {
