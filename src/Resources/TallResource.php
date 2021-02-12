@@ -5,22 +5,27 @@ namespace Nanuc\TallResources\Resources;
 use Illuminate\Support\Arr;
 use Mediconesystems\LivewireDatatables\Column;
 use Nanuc\TallResources\Configurations\TallTableConfiguration;
+use Nanuc\TallResources\Exceptions\TallResourceException;
 
 abstract class TallResource
 {
-    public static function make()
+    public function __construct(
+        protected $resource = null
+    ){}
+
+    public static function make($resource)
     {
-        return new static;
+        return new static($resource);
     }
 
-    public static function asForm($fields = null)
+    public static function asForm($fields = null, $resource = null)
     {
-        return static::make()->getAsForm($fields);
+        return static::make($resource)->getAsForm($fields);
     }
 
-    public static function asTable(TallTableConfiguration $tableConfiguration = null, $fields = null)
+    public static function asTable(TallTableConfiguration $tableConfiguration = null, $fields = null, $resource = null)
     {
-        return static::make()->getAsTable($tableConfiguration, $fields);
+        return static::make($resource)->getAsTable($tableConfiguration, $fields);
     }
 
     public function getAsForm($fields = null)
@@ -54,6 +59,9 @@ abstract class TallResource
             $includedFields = [];
             $fieldsByName = $this->fieldsByName();
             foreach($fields as $field) {
+                if(!Arr::has($fieldsByName, $field)) {
+                    throw new TallResourceException('The field "' . $field . '" is not contained in resource ' . $this::class . '.');
+                }
                 $includedFields[] = $fieldsByName[$field];
             }
             return $includedFields;

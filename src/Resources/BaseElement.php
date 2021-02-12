@@ -27,8 +27,14 @@ abstract class BaseElement
 
     public function toFormField()
     {
-        return ($this->tallFormClass)::make($this->label, $this->key)
+        $formField = ($this->tallFormClass)::make($this->label, $this->key)
             ->rules($this->rules);
+
+        if(property_exists($this, 'options')) {
+            $formField = $formField->options($this->options, false);
+        }
+
+        return $formField;
     }
 
     public function toTableColumn()
