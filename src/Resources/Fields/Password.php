@@ -14,7 +14,7 @@ class Password extends BaseField
     {
         return ($this->tallFormClass)::make($this->label, $this->key)
             ->rules($this->rules)
-            ->autocomplete('off')
+            ->autocomplete('new-password')
             ->type('password');
     }
 }
