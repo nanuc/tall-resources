@@ -14,8 +14,7 @@
     ],
     "require": {
         "php": "^8.0",
-        "tanthammar/tall-forms": "^7.3|^8.2",
-        "mediconesystems/livewire-datatables": "dev-master"
+        "tanthammar/tall-forms": "^7.3|^8.2"
     },
     "require-dev": {
         "orchestra/testbench": "^5.0"
