@@ -13,8 +13,7 @@
         }
     ],
     "require": {
-        "php": "^8.0",
-        "tanthammar/tall-forms": "^7.3|^8.2"
+        "php": "^8.0"
     },
     "require-dev": {
         "orchestra/testbench": "^5.0"
